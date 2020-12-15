@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render ExpenseListItem with props 1`] = `
+<div>
+  <Link
+    to="/edit/1"
+  >
+    apartment
+  </Link>
+  <p>
+    200
+     - 
+    -345600000
+  </p>
+</div>
+`;
