@@ -11,7 +11,7 @@ module.exports = (env) => {
   return {
     entry: "./src/app.js",
     output: {
-      path: path.join(__dirname, "public"),
+      path: path.join(__dirname, "public", "dist"),
       filename: "bundle.js",
     },
     module: {
@@ -43,6 +43,7 @@ module.exports = (env) => {
       // tell webpack untuk re-render index.html jika ketemu 404 error page
       // ini berguna agar react router berjalan, dan tdk terjadi req rendering page di server side
       historyApiFallback: true,
+      publicPath: "/dist/"
     },
   };
 };
