@@ -5,7 +5,7 @@ module.exports = (env) => {
   const isProduction = env === "production";
   // pakai plugin ExtractTextPlugin untuk memisahkan bundle.js dgn css agar ukurannya nggak terlalu besar
   // pass style.css ke class constructor sbg nama file css yg akan dibuat
-  const CSSExtract = new ExtractTextPlugin("style.css");
+  const CSSExtract = new ExtractTextPlugin("styles.css");
 
   console.log("env: ", env);
   return {
