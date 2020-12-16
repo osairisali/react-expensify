@@ -14,6 +14,8 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 
 const store = configureStore();
+// untuk test apakah source-map msh bisa saat production built
+console.log("test")
 // const unsubscribe = store.subscribe(() => {
 //   const state = store.getState();
 //   const visibleExpenses = getVisibleExpenses(state.expenses, state.filters);
