@@ -8,9 +8,9 @@ exports[`should render ExpenseListItem with props 1`] = `
     apartment
   </Link>
   <p>
-    200
-     - 
-    -345600000
+    $ 2.00
+    -
+    December 28th, 1969
   </p>
 </div>
 `;
