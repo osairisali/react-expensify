@@ -8,6 +8,7 @@ import {
   setExpenses,
   startSetExpenses,
   startRemoveExpense,
+  startEditExpense,
 } from "../../actions/expenses";
 import { v4 as uuid } from "uuid";
 import expenseData from "../fixtures/expenses";
@@ -42,7 +43,7 @@ test("should setup remove-expense action object", () => {
   });
 });
 
-test("should generate remove expense action object", (done) => {
+test("should generate remove expense in firebase and redux store", (done) => {
   const store = createMockStore({});
 
   store
@@ -181,7 +182,7 @@ test("should add expense with defaults value to firebase and redux store", (done
 //   });
 // });
 
-test("should setup edit-expense action object", () => {
+test("should setup edit expense action object", () => {
   const action = editExpense("123abc", {
     description: "a description",
     amount: 23,
@@ -199,6 +200,35 @@ test("should setup edit-expense action object", () => {
       createdAt: 2,
     },
   });
+});
+
+test("should update firebase expense dan redux store expense", (done) => {
+  const store = createMockStore({});
+
+  const id = expenseData[0].id;
+  const updates = {
+    note: "mimik cucu",
+  };
+  store
+    .dispatch(startEditExpense(id, updates))
+    .then(() => {
+      const actions = store.getActions();
+
+      expect(actions[0]).toEqual({
+        type: "EDIT_EXPENSE",
+        id,
+        updates,
+      });
+
+      // check updated data already apply in firebase
+      return database.ref(`expense/${id}`).once("value");
+    })
+    .then((snapshot) => {
+      // const updatedExpense = snapshot.val();
+      // console.log("updatedExpense: ", updatedExpense);
+      expect(snapshot.val().note).toBe(updates.note);
+      done();
+    });
 });
 
 test("should return set expenses action object", () => {

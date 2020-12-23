@@ -120,9 +120,7 @@ exports[`should render Expense Form correctly 1`] = `
       placeholder="Add note for your expense (optional)"
       value=""
     />
-    <button
-      type="submit"
-    >
+    <button>
       Add Expense
     </button>
   </form>
@@ -249,9 +247,7 @@ exports[`should render error for invalid form submission 1`] = `
       placeholder="Add note for your expense (optional)"
       value=""
     />
-    <button
-      type="submit"
-    >
+    <button>
       Add Expense
     </button>
   </form>
@@ -380,9 +376,7 @@ exports[`should render error for invalid form submission 2`] = `
       placeholder="Add note for your expense (optional)"
       value=""
     />
-    <button
-      type="submit"
-    >
+    <button>
       Add Expense
     </button>
   </form>
@@ -509,9 +503,7 @@ exports[`should render expense form with expense data 1`] = `
       placeholder="Add note for your expense (optional)"
       value=""
     />
-    <button
-      type="submit"
-    >
+    <button>
       Add Expense
     </button>
   </form>
@@ -638,9 +630,7 @@ exports[`should set note on textarea change 1`] = `
       placeholder="Add note for your expense (optional)"
       value=""
     />
-    <button
-      type="submit"
-    >
+    <button>
       Add Expense
     </button>
   </form>
@@ -767,9 +757,7 @@ exports[`should set note on textarea change 2`] = `
       placeholder="Add note for your expense (optional)"
       value="note change"
     />
-    <button
-      type="submit"
-    >
+    <button>
       Add Expense
     </button>
   </form>
@@ -896,9 +884,7 @@ exports[`should set state of description 1`] = `
       placeholder="Add note for your expense (optional)"
       value=""
     />
-    <button
-      type="submit"
-    >
+    <button>
       Add Expense
     </button>
   </form>
@@ -1025,9 +1011,7 @@ exports[`should set state of description 2`] = `
       placeholder="Add note for your expense (optional)"
       value=""
     />
-    <button
-      type="submit"
-    >
+    <button>
       Add Expense
     </button>
   </form>
