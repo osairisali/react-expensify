@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import ExpenseForm from "./ExpenseForm";
 import { editExpense } from "../actions/expenses";
-import { removeExpense } from "../actions/expenses";
+import { startRemoveExpense } from "../actions/expenses";
 
 export class EditExpensePage extends React.Component {
   onSubmit = (expense) => {
@@ -15,7 +15,7 @@ export class EditExpensePage extends React.Component {
   onRemove = (e) => {
     console.log("remove button clicked");
     // {id} dienkapsulasi dalam object krn parameter removeExpense butuh object yg didalamnya ada id
-    this.props.removeExpense(this.props.expense.id);
+    this.props.startRemoveExpense(this.props.expense.id);
     this.props.history.push("/");
   };
 
@@ -69,7 +69,7 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = (dispatch) => ({
   editExpense: (id, expense) => dispatch(editExpense(id, expense)),
-  removeExpense: (id) => dispatch(removeExpense({ id })),
+  startRemoveExpense: (id) => dispatch(startRemoveExpense(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditExpensePage);

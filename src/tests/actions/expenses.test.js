@@ -7,6 +7,7 @@ import {
   editExpense,
   setExpenses,
   startSetExpenses,
+  startRemoveExpense,
 } from "../../actions/expenses";
 import { v4 as uuid } from "uuid";
 import expenseData from "../fixtures/expenses";
@@ -32,13 +33,37 @@ beforeEach((done) => {
 });
 
 test("should setup remove-expense action object", () => {
-  const action = removeExpense({ id: "123abc" });
+  const action = removeExpense("123abc");
 
   // pakai toEqual untuk membandingkan object
   expect(action).toEqual({
     type: "REMOVE_EXPENSE",
     id: "123abc",
   });
+});
+
+test("should generate remove expense action object", (done) => {
+  const store = createMockStore({});
+
+  store
+    .dispatch(startRemoveExpense(expenseData[0].id))
+    .then(() => {
+      const actions = store.getActions();
+
+      // uji apakah actions[0] return removeExpense action object
+      expect(actions[0]).toEqual({
+        type: "REMOVE_EXPENSE",
+        id: expenseData[0].id,
+      });
+
+      // remove expense with specified id from firebase
+      return database.ref(`expense/${expenseData[0].id}`).once("value");
+    })
+    .then((snapshot) => {
+      // check if data returned is falsy or not (should be falsy because it's already deleted)
+      expect(snapshot.val()).toBeFalsy();
+      done();
+    });
 });
 
 test("should setup add expense action object with provided values", () => {
@@ -187,6 +212,7 @@ test("should fetch the expenses from firebase", (done) => {
   store.dispatch(startSetExpenses()).then(() => {
     const actions = store.getActions();
 
+    // uji apakah actions[0] return setExpenses action object
     expect(actions[0]).toEqual({ type: "SET_EXPENSES", expenses: expenseData });
     done();
   });

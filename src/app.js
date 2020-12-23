@@ -48,6 +48,7 @@ const jsx = (
     <AppRouter />
   </Provider>
 );
+
 ReactDOM.render(<p>Loading....</p>, document.getElementById("app"));
 
 store
