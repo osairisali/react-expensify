@@ -44,3 +44,30 @@ export const editExpense = (id, updates) => ({
   id,
   updates,
 });
+
+export const setExpenses = (expenses) => ({
+  type: "SET_EXPENSES",
+  expenses,
+});
+
+export const startSetExpenses = () => {
+  return (dispatch) => {
+    return database
+      .ref("expense")
+      .once("value")
+      .then((snapshot) => {
+        let expenses = [];
+        console.log("snapshot from startSetExpenses: ", snapshot.val());
+
+        // forEach adalah fungsi iterasi elemen object disediakan firebase
+        snapshot.forEach((expense) => {
+          expenses.push({ id: expense.key, ...expense.val() });
+        });
+        console.log(expenses);
+
+        // dispatch seluruh data expenses yg diterima dengan setExpenses()
+        dispatch(setExpenses(expenses));
+      })
+      .catch((error) => console.log(error));
+  };
+};

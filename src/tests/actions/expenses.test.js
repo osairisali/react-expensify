@@ -5,6 +5,8 @@ import {
   addExpense,
   removeExpense,
   editExpense,
+  setExpenses,
+  startSetExpenses,
 } from "../../actions/expenses";
 import { v4 as uuid } from "uuid";
 import expenseData from "../fixtures/expenses";
@@ -13,6 +15,21 @@ import database from "../../firebase/firebase";
 // konfigurasi store untuk dijalankan di setiap pengujian ini
 // parameter array-nya berisi middlewares, kali ini pake thunk
 const createMockStore = configureMockStore([thunk]);
+
+// semua data yg ditulis di test cases akan dihapus secara otomatis oleh jest, dan
+// hanya menyisakan test data hasil dari beforeEach. Ini krn beforeEach akan dieksekusi untuk tiap test case
+beforeEach((done) => {
+  const expenses = {};
+
+  expenseData.forEach(({ id, description, amount, note, createdAt }) => {
+    expenses[id] = { description, amount, createdAt, note };
+  });
+
+  database
+    .ref("expense")
+    .set(expenses)
+    .then(() => done());
+});
 
 test("should setup remove-expense action object", () => {
   const action = removeExpense({ id: "123abc" });
@@ -156,5 +173,21 @@ test("should setup edit-expense action object", () => {
       note: "a note",
       createdAt: 2,
     },
+  });
+});
+
+test("should return set expenses action object", () => {
+  const action = setExpenses(expenseData);
+  expect(action).toEqual({ type: "SET_EXPENSES", expenses: expenseData });
+});
+
+test("should fetch the expenses from firebase", (done) => {
+  const store = createMockStore({});
+
+  store.dispatch(startSetExpenses()).then(() => {
+    const actions = store.getActions();
+
+    expect(actions[0]).toEqual({ type: "SET_EXPENSES", expenses: expenseData });
+    done();
   });
 });

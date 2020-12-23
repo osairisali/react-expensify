@@ -73,3 +73,19 @@ test("should not edit expense with unknown id", () => {
 
   expect(state).toEqual(expenses);
 });
+
+test("should set expenses with undefined state in expense reducer", () => {
+  const state = expensesReducer(undefined, { type: "SET_EXPENSES", expenses });
+
+  expect(state).toEqual(expenses);
+});
+
+test("should set one added expense with full states parameter in expense reducer", () => {
+  const action = {
+    type: "SET_EXPENSES",
+    expenses: expenses[1],
+  };
+  const state = expensesReducer(expenses, action);
+
+  expect(state).toEqual(expenses[1]);
+});
