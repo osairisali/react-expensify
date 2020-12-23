@@ -6,13 +6,28 @@ import ExpenseListFilters from "./ExpenseListFilters";
 
 // Compnent ExpenseList akan diimpor melalui ExpenseDashboardPage pada AppRouter
 
-export const ExpenseList = (props) => (
+// export const ExpenseList = (props) => (
+//   <div>
+//     <ExpenseListFilters />
+//     {props.expenses.length === 0 ? (
+//       <p>No Expenses</p>
+//     ) : (
+//       props.expenses.map((expense) => {
+//         return <ExpenseListItem key={expense.id} {...expense} />;
+//       })
+//     )}
+//     {/* yg bs dirender hanya jsx dan primitive value js, render object akan 
+//     return error  */}
+//   </div>
+// );
+
+export const ExpenseList = ({expenses}) => (
   <div>
     <ExpenseListFilters />
-    {props.expenses.length === 0 ? (
+    {expenses.length === 0 ? (
       <p>No Expenses</p>
     ) : (
-      props.expenses.map((expense) => {
+      expenses.map((expense) => {
         return <ExpenseListItem key={expense.id} {...expense} />;
       })
     )}

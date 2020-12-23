@@ -1,7 +1,7 @@
 import React from "react";
 import ExpenseForm from "./ExpenseForm";
 import { connect } from "react-redux";
-import { addExpense } from "../actions/expenses";
+import { startAddExpense } from "../actions/expenses";
 
 // dibuatkan class agar tidak render AddExpensePage berulangkali
 export class AddExpensePage extends React.Component {
@@ -9,8 +9,8 @@ export class AddExpensePage extends React.Component {
   // pada AddExpensePage dijalankan, pakai method biasa juga bisa tapi harus pake bind()
   // ini terkait referensi this pada method yg mengarah ke instance onSubmit ketika direferensikan
   // dengan this.addExpense tanpa binding pada <AddExpenseForm />
-  addExpense = (expense) => {
-    this.props.addExpense(expense);
+  startAddExpense = (expense) => {
+    this.props.startAddExpense(expense);
     this.props.history.push("/");
     // console.log(Object.getOwnPropertyNames(this));
   };
@@ -26,7 +26,7 @@ export class AddExpensePage extends React.Component {
     return (
       <div>
         <h1>Add Expense</h1>
-        <ExpenseForm onSubmit={this.addExpense} />
+        <ExpenseForm onSubmit={this.startAddExpense} />
         {/* <ExpenseForm
           onSubmit={this.onSubmit.bind(this)}
         /> */}
@@ -52,7 +52,7 @@ export class AddExpensePage extends React.Component {
 // mapDispatchToProps adalah arg kedua setelah arg mapStateToProps pada connect
 // bekerja untuk return object addExpense ke props dari AddExpensePage
 const mapDispatchToProps = (dispatch) => ({
-  addExpense: (expense) => dispatch(addExpense(expense)),
+  startAddExpense: (expense) => dispatch(startAddExpense(expense)),
 });
 
 // nggak usah pake mapStateToProps krn nggak ngambil state dari sini

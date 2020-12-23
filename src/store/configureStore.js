@@ -1,6 +1,12 @@
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import expensesReducer from "../reducers/expenses";
 import filterReducer from "../reducers/filters";
+
+// add support untuk dispatching function in async actions (thunk bertindak sbg middleware)
+import thunk from "redux-thunk";
+
+const composeEnhancers =
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default () => {
   // STORE creation dengan function reducer yg sdh mencakup action
@@ -9,7 +15,7 @@ export default () => {
       expenses: expensesReducer,
       filters: filterReducer,
     }),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    composeEnhancers(applyMiddleware(thunk))
   );
 
   return store;

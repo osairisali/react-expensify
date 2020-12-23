@@ -7,6 +7,8 @@ import configureStore from "./store/configureStore";
 // import { setTextFilter } from "./actions/filters";
 // import getVisibleExpenses from "./selectors/expenses";
 
+import "./firebase/firebase";
+
 import "normalize.css/normalize.css";
 import "./styles/styles.scss";
 
