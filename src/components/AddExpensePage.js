@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { startAddExpense } from "../actions/expenses";
 
 // dibuatkan class agar tidak render AddExpensePage berulangkali
+// export AddExpensePage ini cuma untuk test case
 export class AddExpensePage extends React.Component {
   // dibuatkan variabel berupa arrow fun sbg referensi eksekusi ketika addExpense prop
   // pada AddExpensePage dijalankan, pakai method biasa juga bisa tapi harus pake bind()

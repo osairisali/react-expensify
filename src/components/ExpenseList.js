@@ -38,7 +38,7 @@ export const ExpenseList = ({expenses}) => (
 
 // ini fun yg return object untuk digunakan sbg props pada ExpenseList di atas
 // fun ini akan menghubungkan store dr redux sbg props pada component ExpenseList
-export const mapStateToProps = (state) => {
+const mapStateToProps = (state) => {
   return {
     // bisa juga return key-value pair yg bukan dr state store
     // name: "ali",

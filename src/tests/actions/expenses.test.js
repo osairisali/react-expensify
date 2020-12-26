@@ -20,6 +20,7 @@ const createMockStore = configureMockStore([thunk]);
 
 // semua data yg ditulis di test cases akan dihapus secara otomatis oleh jest, dan
 // hanya menyisakan test data hasil dari beforeEach. Ini krn beforeEach akan dieksekusi untuk tiap test case
+// pada beforeEach ini, data expenses diupload dulu ke firebase untuk tiap test case
 beforeEach((done) => {
   const expenses = {};
 
