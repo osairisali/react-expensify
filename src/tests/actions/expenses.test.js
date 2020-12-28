@@ -18,6 +18,9 @@ import database from "../../firebase/firebase";
 // parameter array-nya berisi middlewares, kali ini pake thunk
 const createMockStore = configureMockStore([thunk]);
 
+const defaultAuthState = { auth: { uid: "hkKgfi34" } };
+const uid = "hkKgfi34";
+
 // semua data yg ditulis di test cases akan dihapus secara otomatis oleh jest, dan
 // hanya menyisakan test data hasil dari beforeEach. Ini krn beforeEach akan dieksekusi untuk tiap test case
 // pada beforeEach ini, data expenses diupload dulu ke firebase untuk tiap test case
@@ -29,7 +32,7 @@ beforeEach((done) => {
   });
 
   database
-    .ref("expense")
+    .ref(`users/${uid}/expenses`)
     .set(expenses)
     .then(() => done());
 });
@@ -45,7 +48,7 @@ test("should setup remove-expense action object", () => {
 });
 
 test("should generate remove expense in firebase and redux store", (done) => {
-  const store = createMockStore({});
+  const store = createMockStore(defaultAuthState);
 
   store
     .dispatch(startRemoveExpense(expenseData[0].id))
@@ -59,7 +62,9 @@ test("should generate remove expense in firebase and redux store", (done) => {
       });
 
       // remove expense with specified id from firebase
-      return database.ref(`expense/${expenseData[0].id}`).once("value");
+      return database
+        .ref(`users/${uid}/expenses/${expenseData[0].id}`)
+        .once("value");
     })
     .then((snapshot) => {
       // check if data returned is falsy or not (should be falsy because it's already deleted)
@@ -80,7 +85,7 @@ test("should setup add expense action object with provided values", () => {
 // untuk set adanya async function di jest, sediakan param done
 // proses async akan berhenti sampai done() dipanggil
 test("should add expense to database and redux store", (done) => {
-  const store = createMockStore({});
+  const store = createMockStore(defaultAuthState);
   const expense = {
     note: "a note",
     description: "a description",
@@ -103,7 +108,7 @@ test("should add expense to database and redux store", (done) => {
 
     // ambil id dari actions krn id ini sdh di push ke firebase
     database
-      .ref(`expense/${actions[0].expense.id}`)
+      .ref(`users/${uid}/expenses/${actions[0].expense.id}`)
       .once("value")
       .then((snapshot) => {
         // pengujian hasil fetch data dari firebase
@@ -114,7 +119,7 @@ test("should add expense to database and redux store", (done) => {
 });
 
 test("should add expense with defaults value to firebase and redux store", (done) => {
-  const store = createMockStore({});
+  const store = createMockStore(defaultAuthState);
 
   const expenseDefault = {
     description: "",
@@ -137,7 +142,7 @@ test("should add expense with defaults value to firebase and redux store", (done
 
     // test in firebase
     database
-      .ref(`expense/${actions[0].expense.id}`)
+      .ref(`users/${uid}/expenses/${actions[0].expense.id}`)
       .once("value")
       .then((snapshot) => {
         expect(snapshot.val()).toEqual(expenseDefault);
@@ -204,7 +209,7 @@ test("should setup edit expense action object", () => {
 });
 
 test("should update firebase expense dan redux store expense", (done) => {
-  const store = createMockStore({});
+  const store = createMockStore(defaultAuthState);
 
   const id = expenseData[0].id;
   const updates = {
@@ -222,7 +227,7 @@ test("should update firebase expense dan redux store expense", (done) => {
       });
 
       // check updated data already apply in firebase
-      return database.ref(`expense/${id}`).once("value");
+      return database.ref(`users/${uid}/expenses/${id}`).once("value");
     })
     .then((snapshot) => {
       // const updatedExpense = snapshot.val();
@@ -238,7 +243,7 @@ test("should return set expenses action object", () => {
 });
 
 test("should fetch the expenses from firebase", (done) => {
-  const store = createMockStore({});
+  const store = createMockStore(defaultAuthState);
 
   store.dispatch(startSetExpenses()).then(() => {
     const actions = store.getActions();

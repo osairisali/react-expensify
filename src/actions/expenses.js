@@ -10,7 +10,9 @@ export const addExpense = (expense) => ({
 // async actions untuk digunakan dengan thunk
 export const startAddExpense = (expenseData = {}) => {
   // return function dgn parameter dispatch, ini dipanggil oleh redux thunk middleware
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
+
     const {
       description = "",
       note = "",
@@ -22,7 +24,7 @@ export const startAddExpense = (expenseData = {}) => {
 
     // push ke firebase
     return database
-      .ref("expense")
+      .ref(`users/${uid}/expenses`)
       .push(expense)
       .then((ref) => {
         // update data di redux store
@@ -39,9 +41,10 @@ export const removeExpense = (id) => ({
 });
 
 export const startRemoveExpense = (id) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
     return database
-      .ref(`expense/${id}`)
+      .ref(`users/${uid}/expenses/${id}`)
       .remove()
       .then(() => {
         console.log("expense berhasil dihapus");
@@ -59,9 +62,10 @@ export const editExpense = (id, updates) => ({
 });
 
 export const startEditExpense = (id, updates) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
     return database
-      .ref(`expense/${id}`)
+      .ref(`users/${uid}/expenses/${id}`)
       .update({ ...updates })
       .then(() => {
         console.log("berhasil update data");
@@ -77,9 +81,10 @@ export const setExpenses = (expenses) => ({
 });
 
 export const startSetExpenses = () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const uid = getState().auth.uid;
     return database
-      .ref("expense")
+      .ref(`users/${uid}/expenses`)
       .once("value")
       .then((snapshot) => {
         let expenses = [];
