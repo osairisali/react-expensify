@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import { SingleDatePicker } from "react-dates";
+import { history } from "../routers/AppRouter";
 
 export default class ExpenseForm extends React.Component {
   // pakai constructor agar bisa akses props yg diteruskan pada komponen ini dari EditExpensePage dan AddExpensePage
@@ -79,40 +80,48 @@ export default class ExpenseForm extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>{this.state.error}</h1>
-        <form onSubmit={this.onSubmit}>
-          <input
-            type="text"
-            placeholder="Description"
-            autoFocus
-            value={this.state.description}
-            onChange={this.onDescriptionChange}
-          />
-          {/* pakai prop step="any" agar bisa input floating number */}
-          <input
-            type="number"
-            step="any"
-            placeholder="Amount"
-            value={this.state.amount}
-            onChange={this.onAmountChange}
-          />
-          <SingleDatePicker
-            date={this.state.createdAt}
-            focused={this.state.calendarFocused}
-            onDateChange={this.onDateChange}
-            onFocusChange={this.onFocusChange}
-            numberOfMonths={1}
-            isOutsideRange={() => false}
-          />
-          <textarea
-            placeholder="Add note for your expense (optional)"
-            value={this.state.note}
-            onChange={this.onNoteChange}
-          ></textarea>
-          <button>Add Expense</button>
-        </form>
-      </div>
+      <form className="form" onSubmit={this.onSubmit}>
+        <p className="form__error">{this.state.error}</p>
+        <input
+          type="text"
+          className="text-input"
+          placeholder="Description"
+          autoFocus
+          value={this.state.description}
+          onChange={this.onDescriptionChange}
+        />
+        {/* pakai prop step="any" agar bisa input floating number */}
+        <input
+          className="text-input"
+          type="number"
+          step="any"
+          placeholder="Amount"
+          value={this.state.amount}
+          onChange={this.onAmountChange}
+        />
+        <SingleDatePicker
+          date={this.state.createdAt}
+          focused={this.state.calendarFocused}
+          onDateChange={this.onDateChange}
+          onFocusChange={this.onFocusChange}
+          numberOfMonths={1}
+          isOutsideRange={() => false}
+        />
+        <textarea
+          placeholder="Add note for your expense (optional)"
+          className="textarea"
+          value={this.state.note}
+          onChange={this.onNoteChange}
+        ></textarea>
+        <div>
+          {/* {console.log(history)} */}
+          {history.location.pathname.includes("edit") ? (
+            <button className="button">Save Expense</button>
+          ) : (
+            <button className="button">Add Expense</button>
+          )}
+        </div>
+      </form>
     );
   }
 }

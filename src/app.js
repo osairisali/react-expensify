@@ -5,6 +5,7 @@ import AppRouter, { history } from "./routers/AppRouter";
 import configureStore from "./store/configureStore";
 import { startSetExpenses } from "./actions/expenses";
 import { login, logout } from "./actions/auth";
+import Loading from "./components/Loading";
 // import LoginPage from "./components/LoginPage";
 // import { setTextFilter } from "./actions/filters";
 // import getVisibleExpenses from "./selectors/expenses";
@@ -60,7 +61,7 @@ const renderApp = () => {
   }
 };
 
-ReactDOM.render(<p>Loading...</p>, document.getElementById("app"));
+ReactDOM.render(<Loading />, document.getElementById("app"));
 
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {

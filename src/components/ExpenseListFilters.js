@@ -42,36 +42,47 @@ export class ExpenseListFilters extends React.Component {
     } else if (e.target.value === "amount") {
       this.props.sortByAmount();
     }
-  }
+  };
 
   render() {
     return (
-      <div>
-        <input
-          type="text"
-          defaultValue={this.props.filters.text}
-          // regiter function ketika terjadi perubahan pada input field
-          onChange={this.setTextFilter}
-        />
-        <select
-          value={this.props.filters.sortBy}
-          onChange={this.sortBy}
-        >
-          <option value="date">Date</option>
-          <option value="amount">Amount</option>
-        </select>
-        <DateRangePicker
-          startDate={this.props.filters.startDate}
-          endDate={this.props.filters.endDate}
-          onDatesChange={this.onDatesChange}
-          focusedInput={this.state.calendarFocused}
-          onFocusChange={this.onFocusChange}
-          numberOfMonths={1}
-          showClearDates={true}
-          isOutsideRange={() => false}
-          startDateId={"startDate"}
-          endDateId={"endDate"}
-        />
+      <div className="content-container">
+        <div className="input-group">
+          <div className="input-group__item">
+            <input
+              className="text-input"
+              placeholder="Search expenses"
+              type="text"
+              defaultValue={this.props.filters.text}
+              // regiter function ketika terjadi perubahan pada input field
+              onChange={this.setTextFilter}
+            />
+          </div>
+          <div className="input-group__item">
+            <select
+              className="select"
+              value={this.props.filters.sortBy}
+              onChange={this.sortBy}
+            >
+              <option value="date">Date</option>
+              <option value="amount">Amount</option>
+            </select>
+          </div>
+          <div className="input-group__item">
+            <DateRangePicker
+              startDate={this.props.filters.startDate}
+              endDate={this.props.filters.endDate}
+              onDatesChange={this.onDatesChange}
+              focusedInput={this.state.calendarFocused}
+              onFocusChange={this.onFocusChange}
+              numberOfMonths={1}
+              showClearDates={true}
+              isOutsideRange={() => false}
+              startDateId={"startDate"}
+              endDateId={"endDate"}
+            />
+          </div>
+        </div>
       </div>
     );
   }

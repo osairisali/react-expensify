@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import ExpenseListItem from "./ExpenseListItem";
 import selectExpenses from "../selectors/expenses";
-import ExpenseListFilters from "./ExpenseListFilters";
 
 // Compnent ExpenseList akan diimpor melalui ExpenseDashboardPage pada AppRouter
 
@@ -16,23 +15,29 @@ import ExpenseListFilters from "./ExpenseListFilters";
 //         return <ExpenseListItem key={expense.id} {...expense} />;
 //       })
 //     )}
-//     {/* yg bs dirender hanya jsx dan primitive value js, render object akan 
+//     {/* yg bs dirender hanya jsx dan primitive value js, render object akan
 //     return error  */}
 //   </div>
 // );
 
-export const ExpenseList = ({expenses}) => (
-  <div>
-    <ExpenseListFilters />
-    {expenses.length === 0 ? (
-      <p>No Expenses</p>
-    ) : (
-      expenses.map((expense) => {
-        return <ExpenseListItem key={expense.id} {...expense} />;
-      })
-    )}
-    {/* yg bs dirender hanya jsx dan primitive value js, render object akan 
-    return error  */}
+export const ExpenseList = ({ expenses }) => (
+  <div className="content-container">
+    <div className="list-header">
+      <div className="show-on-mobile">Expenses</div>
+      <div className="show-on-desktop">Expense</div>
+      <div className="show-on-desktop">Amount</div>
+    </div>
+    <div className="list-body">
+      {expenses.length === 0 ? (
+        <div className="list-item list-item__message">
+          <span>No Expenses</span>
+        </div>
+      ) : (
+        expenses.map((expense) => {
+          return <ExpenseListItem key={expense.id} {...expense} />;
+        })
+      )}
+    </div>
   </div>
 );
 
